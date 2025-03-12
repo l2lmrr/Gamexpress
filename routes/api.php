@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+
 
 Route::prefix('v1')->group(function () {
     Route::post('/admin/register', [AuthController::class, 'register']);
@@ -10,6 +12,10 @@ Route::prefix('v1')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('/logout', [AuthController::class, 'logout']);
         Route::get('/user', [AuthController::class, 'user']);
+    });
+
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('/admin/assign-role', [AdminController::class, 'assignRole']);
     });
 
 });

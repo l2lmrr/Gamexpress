@@ -26,7 +26,9 @@ class AuthController extends Controller
         'password' => Hash::make($request->password),
     ]);
 
-    $token = $user->createToken('auth_token')->plainTextToken;
+    $user->assignRole('user');
+
+    $token = $user->createToken('authToken')->plainTextToken;
 
     $user->update(['api_token' => $token]);
 
@@ -55,8 +57,7 @@ class AuthController extends Controller
         ]);
     }
 
-    // Retrieve the existing token from the database
-    $token = $user->api_token;
+    $token = $user->createToken('authToken')->plainTextToken;
 
     return response()->json([
         'message' => 'User logged in successfully',
